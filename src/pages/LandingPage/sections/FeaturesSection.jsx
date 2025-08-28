@@ -117,7 +117,7 @@ const FeaturesSection = () => {
       <div className="relative w-[320px]">
         <img
           className="w-[90%] h-[90%]"
-          src="src/assets/images/iphone-mockup.png"
+          src="/images/iphone-mockup.png"
           alt="iPhone Mockup"
         />
         <img

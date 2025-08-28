@@ -8,7 +8,7 @@ const features = [
       "Seamless animations",
       "Efficient power usage",
     ],
-    image: "src/assets/images/features/feature-1.png",
+    image: "/images/features/feature-1.png",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const features = [
       "Wide viewing angles",
       "Eye comfort with low blue light",
     ],
-    image: "src/assets/images/features/feature-2.png",
+    image: "/images/features/feature-2.png",
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const features = [
       "Optimized battery health management",
       "Energy-efficient hardware",
     ],
-    image: "src/assets/images/features/feature-3.png",
+    image: "/images/features/feature-3.png",
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const features = [
       "4K video recording",
       "AI-powered enhancements",
     ],
-    image: "src/assets/images/features/feature-4.png",
+    image: "/images/features/feature-4.png",
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const features = [
       "Regular security updates",
       "Privacy-first app permissions",
     ],
-    image: "src/assets/images/features/feature-5.png",
+    image: "/images/features/feature-5.png",
   },
 ];
 
