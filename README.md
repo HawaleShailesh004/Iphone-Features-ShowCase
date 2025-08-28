@@ -4,7 +4,7 @@ A modern responsive landing page built with **React**, **Vite**, and **TailwindC
 
 ## 📸 Preview
 
-![GIF](frontend/screenshots/live-preview.gif)
+![GIF](/screenshots/live-preview.gif)
 
 ---
 
