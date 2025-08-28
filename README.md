@@ -10,7 +10,7 @@ A modern responsive landing page built with **React**, **Vite**, and **TailwindC
 
 ## 🌍 Live Demo
 
-👉 [View Live Site](https://your-live-link.com)
+👉 [View Live Site](https://iphone-features-show-case.vercel.app/)
 
 ---
 

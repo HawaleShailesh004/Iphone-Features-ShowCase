@@ -4,78 +4,77 @@ import { useInView } from "react-intersection-observer";
 
 const FeaturesSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [featureList, setFeatureList] = useState(features.map((f) => f.title));
   const [currentFeature, setCurrentFeature] = useState(features[0]);
-  const [featureData, setFeatureData] = useState(features);
-
   const [locked, setLocked] = useState(false);
+  const featureList = features.map((f) => f.title);
+
   const { ref, inView } = useInView({
-    threshold: 0.95, // 95% visible
+    threshold: 0.95, // Trigger when 95% of the section is visible
   });
 
+  // Update current feature whenever activeIndex changes
   useEffect(() => {
     setCurrentFeature(features[activeIndex]);
   }, [activeIndex]);
 
+  // Handle wheel scroll navigation
   const handleWheel = useCallback(
     (e) => {
       if (!locked) return;
 
-      e.preventDefault(); // stop page scroll
+      e.preventDefault();
 
-      // A little delay to prevent rapid-fire scrolling
-      // This is optional but can improve user experience
       let scrollTimeout;
       clearTimeout(scrollTimeout);
+
       scrollTimeout = setTimeout(() => {
         if (e.deltaY > 1) {
-          // Check for any downward scroll
-          // scroll down
+          // Scroll down
           setActiveIndex((prev) => {
             if (prev < features.length - 1) {
               return prev + 1;
             } else {
-              // This is the key: Unlock ONLY when trying to scroll PAST the last item
-              setLocked(false);
+              setLocked(false); // Unlock at last feature
               return prev;
             }
           });
         } else if (e.deltaY < -1) {
-          // Check for any upward scroll
-          // scroll up
-          setActiveIndex((prev) => Math.max(prev - 1, 0));
+          // Scroll up
+          setActiveIndex((prev) => {
+            if (prev > 0) {
+              return prev - 1;
+            } else {
+              setLocked(false); // Unlock at first feature
+              return prev;
+            }
+          });
         }
-      }, 50); // 50ms debounce
+      }, 50); // Debounce scroll events
     },
-    [locked] // Dependency is correct
+    [locked]
   );
 
+  // Add or remove wheel event listener based on section visibility
   useEffect(() => {
-    // MODIFICATION HERE:
-    // Lock the component as soon as it's in view.
-    // Let the handleWheel function decide when to unlock.
     if (inView) {
       setLocked(true);
       window.addEventListener("wheel", handleWheel, { passive: false });
     } else {
-      // This part remains the same, to unlock if the user scrolls away
       setLocked(false);
       window.removeEventListener("wheel", handleWheel);
     }
 
-    // Cleanup function
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
-  }, [inView, handleWheel]); // Dependencies are correct
+  }, [inView, handleWheel]);
 
   return (
     <div
       ref={ref}
-      // The class logic remains correct
       className={`${
         locked ? "sticky top-0" : "relative"
-      } w-full min-h-screen grid grid-cols-1 md:grid-cols-3 place-items-center gap-8 px-8 mb-20`}
+      } w-full min-h-screen grid grid-cols-1 md:grid-cols-3 place-items-center gap-8 px-8 my-20`}
     >
       {/* Left Section: Feature Details */}
       <div
@@ -96,8 +95,9 @@ const FeaturesSection = () => {
             </li>
           ))}
         </ul>
+
         {/* Navigation Arrows */}
-        <div className="flex w-15 md:w-auto items-center justify-between gap-2 mt-6 h-10">
+        <div className="flex w-15 md:w-12 items-center justify-between gap-2 mt-6 h-10">
           <button
             className="cursor-pointer text-xl"
             onClick={() => setActiveIndex((prev) => Math.max(prev - 1, 0))}
@@ -131,21 +131,20 @@ const FeaturesSection = () => {
         />
       </div>
 
-      {/* Right Section */}
+      {/* Right Section: Feature List */}
       <div className="flex flex-col items-start w-[320px]">
         <h2 className="text-2xl font-bold text-primary">Feature Showcase</h2>
         <ul className="list-none md:mt-5 mt-3 text-secondary-light w-full">
           {featureList.map((feature, index) => (
             <li
               key={index}
-              className={`flex items-center rounded min-h-[20px]md:min-h-[60px] cursor-pointer w-full ${
-                activeIndex === index ? "font-bold text-primary" : "" // Added text-primary for better visibility
+              className={`flex items-center rounded min-h-[20px] sm:min-h-[60px] cursor-pointer w-full ${
+                activeIndex === index ? "font-bold text-secondary-dark" : ""
               }`}
               onClick={() => setActiveIndex(index)}
             >
               <span
                 className={`w-0.5 h-10 mr-5 transition-colors ${
-                  // Added transition
                   activeIndex === index ? "bg-accent" : ""
                 }`}
               ></span>
